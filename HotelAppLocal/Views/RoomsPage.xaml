@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HotelAppLocal.Views.RoomsPage"
+             Title="Доступные комнаты">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Button Text="Обновить"
+                Command="{Binding LoadCommand}" />
+
+        <CollectionView ItemsSource="{Binding Rooms}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="5" Padding="10">
+                        <HorizontalStackLayout>
+                            <Label Text="Комната:" />
+                            <Label Text="{Binding Number}"
+                                   FontSize="20"
+                                   FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

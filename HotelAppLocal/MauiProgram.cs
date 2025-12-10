@@ -1,5 +1,6 @@
-﻿using HotelAppLocal;
-using HotelAppLocal.Data;
+﻿using HotelAppLocal.Data;
+using HotelAppLocal.ViewModels;
+using HotelAppLocal.Views;
 
 namespace HotelAppLocal;
 
@@ -15,20 +16,19 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
 
-        // путь к файлу базы данных
         string dbPath = Path.Combine(FileSystem.AppDataDirectory, "rooms.db");
 
-        // регистрируем DbContext как Singleton
+        // DbContext
         builder.Services.AddSingleton<AppDbContext>(_ =>
         {
             var ctx = new AppDbContext(dbPath);
-            DbInitializer.Initialize(ctx); // один раз создаём БД и тестовые данные
+            DbInitializer.Initialize(ctx);
             return ctx;
         });
 
-        // ViewModel и Page для списка комнат добавим ниже:
-        builder.Services.AddTransient<ViewModels.RoomsViewModel>();
-        builder.Services.AddTransient<Views.RoomsPage>();
+        // ViewModel + Page
+        builder.Services.AddTransient<RoomsViewModel>();
+        builder.Services.AddTransient<RoomsPage>();
 
         return builder.Build();
     }
