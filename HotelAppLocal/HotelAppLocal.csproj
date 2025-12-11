@@ -67,6 +67,9 @@
 	  <Compile Update="Views\BookingPage.xaml.cs">
 	    <DependentUpon>BookingPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\RegistrationPage.xaml.cs">
+	    <DependentUpon>RegistrationPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\RoomsPage.xaml.cs">
 	    <DependentUpon>RoomsPage.xaml</DependentUpon>
 	  </Compile>
@@ -74,6 +77,15 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\BookingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BookingsManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RegistrationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RoomsPage.xaml">

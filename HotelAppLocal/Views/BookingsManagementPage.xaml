@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HotelAppLocal.Views.BookingsManagementPage"
+             x:Name="RootPage"
+             Title="Бронирования">
+
+    <ContentPage.BackgroundColor>#EFF6FF</ContentPage.BackgroundColor>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Верхняя панель -->
+        <Grid Grid.Row="0"
+              Padding="16,20"
+              BackgroundColor="#1D4ED8">
+            <Label Text="Управление бронированиями"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White" />
+        </Grid>
+
+        <!-- Список броней -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Bookings}"
+                        ItemsLayout="VerticalList"
+                        Margin="16,12,16,16">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame HasShadow="True"
+                           CornerRadius="12"
+                           Padding="14"
+                           Margin="0,0,0,10"
+                           BackgroundColor="White"
+                           BorderColor="#E5E7EB">
+
+                        <VerticalStackLayout Spacing="8">
+
+                            <!-- Верхняя строка: номер комнаты + статус -->
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding RoomNumber, StringFormat='Номер {0}'}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#111827" />
+
+                                <Frame Grid.Column="1"
+                                       Padding="6,2"
+                                       CornerRadius="999"
+                                       BackgroundColor="{Binding StatusColor}">
+                                    <Label Text="{Binding StatusText}"
+                                           FontSize="12"
+                                           TextColor="White" />
+                                </Frame>
+                            </Grid>
+
+                            <!-- Гость -->
+                            <Label Text="{Binding GuestName, StringFormat='Гость: {0}'}"
+                                   FontSize="14"
+                                   TextColor="#111827" />
+
+                            <!-- Телефон -->
+                            <Label Text="{Binding GuestPhone, StringFormat='Телефон: {0}'}"
+                                   FontSize="14"
+                                   TextColor="#111827" />
+
+                            <!-- Даты -->
+                            <Label Text="{Binding DateRange, StringFormat='Период: {0}'}"
+                                   FontSize="13"
+                                   TextColor="#6B7280" />
+
+                            <!-- Кнопки действий -->
+                            <HorizontalStackLayout Spacing="10"
+                                                   Margin="0,6,0,0">
+
+                                <Button Text="Подтвердить"
+                                        BackgroundColor="#16A34A"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Padding="10,6"
+                                        FontSize="13"
+                                        HorizontalOptions="FillAndExpand"
+                                        IsEnabled="{Binding CanConfirm}"
+                                        Command="{Binding BindingContext.ConfirmCommand, Source={x:Reference RootPage}}"
+                                        CommandParameter="{Binding .}" />
+
+                                <Button Text="Отменить"
+                                        BackgroundColor="#DC2626"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Padding="10,6"
+                                        FontSize="13"
+                                        HorizontalOptions="FillAndExpand"
+                                        IsEnabled="{Binding CanCancel}"
+                                        Command="{Binding BindingContext.CancelCommand, Source={x:Reference RootPage}}"
+                                        CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

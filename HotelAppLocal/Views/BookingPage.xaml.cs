@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using HotelAppLocal.Data;
+using HotelAppLocal.Models;
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HotelAppLocal.Data;
-using HotelAppLocal.Models;
 
 namespace HotelAppLocal.Views;
 
@@ -40,6 +40,13 @@ public partial class BookingPage : ContentPage
         {
             get => _guestName;
             set { _guestName = value; OnPropertyChanged(); }
+        }
+
+        private string _guestPhone = string.Empty;
+        public string GuestPhone
+        {
+            get => _guestPhone;
+            set { _guestPhone = value; OnPropertyChanged(); }
         }
 
         private DateTime _fromDate = DateTime.Today;
@@ -82,6 +89,12 @@ public partial class BookingPage : ContentPage
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(GuestPhone))
+            {
+                StatusMessage = "Введите телефон гостя.";
+                return;
+            }
+
             if (ToDate <= FromDate)
             {
                 StatusMessage = "Дата выезда должна быть позже даты заезда.";
@@ -103,12 +116,17 @@ public partial class BookingPage : ContentPage
                 return;
             }
 
+            var auth = IPlatformApplication.Current.Services.GetService<AuthService>();
+
             var booking = new Booking
             {
                 RoomId = _room.Id,
                 GuestName = GuestName.Trim(),
+                GuestPhone = GuestPhone.Trim(),
                 FromDate = FromDate,
-                ToDate = ToDate
+                ToDate = ToDate,
+                Status = BookingStatus.Pending,
+                CreatedByUserId = auth?.CurrentUser?.Id
             };
 
             _db.Bookings.Add(booking);
@@ -119,7 +137,7 @@ public partial class BookingPage : ContentPage
 
             await _db.SaveChangesAsync();
 
-            StatusMessage = "Бронь успешно создана!";
+            StatusMessage = "Бронь создана и ожидает подтверждения.";
 
             // TODO: можно сделать навигацию назад через пару секунд
         }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HotelAppLocal.Views.LoginPage"
+             Title="Вход">
+
+    <Grid BackgroundColor="#EFF6FF">
+        <VerticalStackLayout Padding="24" Spacing="16"
+                             VerticalOptions="Center">
+
+            <Label Text="Вход в HotelApp"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#1D4ED8" />
+
+            <Entry Placeholder="Логин"
+                   Text="{Binding Username}"
+                   TextColor="#111827"
+                   PlaceholderColor="#9CA3AF" />
+
+            <Entry Placeholder="Пароль"
+                   IsPassword="True"
+                   Text="{Binding Password}"
+                   TextColor="#111827"
+                   PlaceholderColor="#9CA3AF" />
+
+            <Button Text="Войти"
+                    BackgroundColor="#1D4ED8"
+                    TextColor="White"
+                    CornerRadius="8"
+                    FontAttributes="Bold"
+                    Command="{Binding LoginCommand}" />
+
+            <Button Text="Регистрация"
+                    BackgroundColor="Transparent"
+                    TextColor="#1D4ED8"
+                    FontAttributes="Bold"
+                    Command="{Binding GoToRegisterCommand}" />
+
+            <Label Text="{Binding Error}"
+                   TextColor="#DC2626"
+                   FontSize="12" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

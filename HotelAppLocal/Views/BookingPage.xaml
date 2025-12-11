@@ -8,12 +8,20 @@
         <ScrollView>
             <Grid Padding="20">
 
+                <!-- Добавили ещё одну строку для кнопки -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <!-- 0: карточка номера -->
                     <RowDefinition Height="Auto" />
+                    <!-- 1: имя -->
                     <RowDefinition Height="Auto" />
+                    <!-- 2: телефон -->
                     <RowDefinition Height="Auto" />
+                    <!-- 3: заезд -->
                     <RowDefinition Height="Auto" />
+                    <!-- 4: выезд -->
+                    <RowDefinition Height="Auto" />
+                    <!-- 5: кнопка + статус -->
                 </Grid.RowDefinitions>
 
                 <!-- Информация о номере -->
@@ -38,30 +46,38 @@
                 <VerticalStackLayout Grid.Row="1" Spacing="4" Margin="0,0,0,16">
                     <Label Text="Имя гостя" TextColor="White" />
                     <Entry Text="{Binding GuestName}"
-                           Placeholder="Введите ваше имя" />
+                           Placeholder="Введите имя гостя" />
+                </VerticalStackLayout>
+
+                <!-- Телефон -->
+                <VerticalStackLayout Grid.Row="2" Spacing="4" Margin="0,0,0,16">
+                    <Label Text="Телефон гостя" TextColor="White" />
+                    <Entry Text="{Binding GuestPhone}"
+                           Placeholder="+7..." Keyboard="Telephone" />
                 </VerticalStackLayout>
 
                 <!-- Дата заезда -->
-                <VerticalStackLayout Grid.Row="2" Spacing="4" Margin="0,0,0,16">
+                <VerticalStackLayout Grid.Row="3" Spacing="4" Margin="0,0,0,16">
                     <Label Text="Дата заезда" TextColor="White" />
                     <DatePicker Date="{Binding FromDate}" />
                 </VerticalStackLayout>
 
                 <!-- Дата выезда -->
-                <VerticalStackLayout Grid.Row="3" Spacing="4" Margin="0,0,0,16">
+                <VerticalStackLayout Grid.Row="4" Spacing="4" Margin="0,0,0,16">
                     <Label Text="Дата выезда" TextColor="White" />
                     <DatePicker Date="{Binding ToDate}" />
                 </VerticalStackLayout>
 
                 <!-- Кнопка + статус -->
-                <VerticalStackLayout Grid.Row="4" Spacing="8">
+                <VerticalStackLayout Grid.Row="5" Spacing="8">
                     <Button Text="Подтвердить бронь"
                             Command="{Binding SaveCommand}"
                             BackgroundColor="#22C55E"
                             TextColor="White"
                             CornerRadius="24"
                             Padding="16,8"
-                            FontAttributes="Bold" />
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand" />
 
                     <Label Text="{Binding StatusMessage}"
                            TextColor="#F97316"

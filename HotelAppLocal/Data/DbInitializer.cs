@@ -6,10 +6,11 @@ namespace HotelAppLocal.Data
     {
         public static void Initialize(AppDbContext context)
         {
-            // Каждый запуск: пересоздаём схему
+            // Для разработки: каждый запуск пересоздаём схему
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+            // --- Комнаты ---
             var rooms = new[]
             {
                 new Room { Number = "101", IsAvailable = true,  PricePerNight = 4500 },
@@ -20,7 +21,23 @@ namespace HotelAppLocal.Data
 
             context.Rooms.AddRange(rooms);
 
-            // пока бронирования не добавляем, будут создаваться из приложения
+            // --- Пользователи системы ---
+            var admin = new User
+            {
+                Username = "admin",
+                PasswordHash = "admin123",      // для демо
+                Role = UserRole.Admin
+            };
+
+            var registrar = new User
+            {
+                Username = "reg",
+                PasswordHash = "reg123",
+                Role = UserRole.Registrar
+            };
+
+            context.Users.AddRange(admin, registrar);
+
             context.SaveChanges();
         }
     }

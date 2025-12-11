@@ -10,23 +10,30 @@ namespace HotelAppLocal.Models
 
         [ForeignKey(nameof(Room))]
         public int RoomId { get; set; }
-
         public Room Room { get; set; } = null!;
 
-        /// <summary>
-        /// Имя гостя
-        /// </summary>
+        /// <summary>Имя гостя</summary>
         [MaxLength(100)]
         public string GuestName { get; set; } = null!;
 
-        /// <summary>
-        /// Дата заезда (включительно)
-        /// </summary>
-        public DateTime FromDate { get; set; }
+        /// <summary>Телефон гостя</summary>
+        [MaxLength(30)]
+        public string GuestPhone { get; set; } = null!;
 
-        /// <summary>
-        /// Дата выезда ( *не* включая эту дату)
-        /// </summary>
+        public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+
+        /// <summary>Статус брони</summary>
+        public BookingStatus Status { get; set; } = BookingStatus.Pending;
+
+        /// <summary>Кем создана бронь (пользователь системы)</summary>
+        [ForeignKey(nameof(CreatedByUser))]
+        public int? CreatedByUserId { get; set; }
+        public User? CreatedByUser { get; set; }
+
+        /// <summary>Кем подтверждена/отменена</summary>
+        [ForeignKey(nameof(HandledByUser))]
+        public int? HandledByUserId { get; set; }
+        public User? HandledByUser { get; set; }
     }
 }
