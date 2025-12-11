@@ -1,23 +1,27 @@
-﻿using HotelAppLocal.Data;
-using HotelAppLocal.Models;
+﻿using HotelAppLocal.Models;
 
-public static class DbInitializer
+namespace HotelAppLocal.Data
 {
-    public static void Initialize(AppDbContext context)
+    public static class DbInitializer
     {
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-
-        var rooms = new[]
+        public static void Initialize(AppDbContext context)
         {
-            new Room { Number = "101", IsAvailable = true,  PricePerNight = 4500 },
-            new Room { Number = "102", IsAvailable = true,  PricePerNight = 4500 },
-            new Room { Number = "103", IsAvailable = false,  PricePerNight = 4500 },
-            new Room { Number = "104", IsAvailable = true,  PricePerNight = 4500 },
-            // ...
-        };
+            // Каждый запуск: пересоздаём схему
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
-        context.Rooms.AddRange(rooms);
-        context.SaveChanges();
+            var rooms = new[]
+            {
+                new Room { Number = "101", IsAvailable = true,  PricePerNight = 4500 },
+                new Room { Number = "102", IsAvailable = true,  PricePerNight = 5200 },
+                new Room { Number = "201", IsAvailable = false, PricePerNight = 6000 },
+                new Room { Number = "202", IsAvailable = true,  PricePerNight = 5800 },
+            };
+
+            context.Rooms.AddRange(rooms);
+
+            // пока бронирования не добавляем, будут создаваться из приложения
+            context.SaveChanges();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace HotelAppLocal.Data
         }
 
         public DbSet<Room> Rooms => Set<Room>();
+        public DbSet<Booking> Bookings => Set<Booking>();   // ← добавили
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

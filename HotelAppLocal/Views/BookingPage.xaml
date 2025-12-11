@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HotelAppLocal.Views.BookingPage"
+             Title="Бронирование">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="20">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Информация о номере -->
+                <Frame Grid.Row="0"
+                       Padding="16"
+                       CornerRadius="18"
+                       BackgroundColor="White"
+                       HasShadow="True"
+                       Margin="0,0,0,16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding RoomNumber}"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#1F2933" />
+                        <Label Text="{Binding PriceText}"
+                               FontSize="16"
+                               TextColor="#2563EB" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Имя гостя -->
+                <VerticalStackLayout Grid.Row="1" Spacing="4" Margin="0,0,0,16">
+                    <Label Text="Имя гостя" TextColor="White" />
+                    <Entry Text="{Binding GuestName}"
+                           Placeholder="Введите ваше имя" />
+                </VerticalStackLayout>
+
+                <!-- Дата заезда -->
+                <VerticalStackLayout Grid.Row="2" Spacing="4" Margin="0,0,0,16">
+                    <Label Text="Дата заезда" TextColor="White" />
+                    <DatePicker Date="{Binding FromDate}" />
+                </VerticalStackLayout>
+
+                <!-- Дата выезда -->
+                <VerticalStackLayout Grid.Row="3" Spacing="4" Margin="0,0,0,16">
+                    <Label Text="Дата выезда" TextColor="White" />
+                    <DatePicker Date="{Binding ToDate}" />
+                </VerticalStackLayout>
+
+                <!-- Кнопка + статус -->
+                <VerticalStackLayout Grid.Row="4" Spacing="8">
+                    <Button Text="Подтвердить бронь"
+                            Command="{Binding SaveCommand}"
+                            BackgroundColor="#22C55E"
+                            TextColor="White"
+                            CornerRadius="24"
+                            Padding="16,8"
+                            FontAttributes="Bold" />
+
+                    <Label Text="{Binding StatusMessage}"
+                           TextColor="#F97316"
+                           FontSize="13" />
+                </VerticalStackLayout>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#1E3C72" Offset="0.0" />
+            <GradientStop Color="#2A5298" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+</ContentPage>
