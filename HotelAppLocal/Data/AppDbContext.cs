@@ -1,23 +1,23 @@
-﻿using HotelAppLocal.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using HotelAppLocal.Models;
 
 namespace HotelAppLocal.Data
 {
     public class AppDbContext : DbContext
     {
-        private readonly string _dbPath;
+        private readonly string _connectionString;
 
-        public AppDbContext(string dbPath)
+        public AppDbContext(string connectionString)
         {
-            _dbPath = dbPath;
+            _connectionString = connectionString;
         }
 
         public DbSet<Room> Rooms => Set<Room>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // SQLite-файл лежит по пути _dbPath
-            optionsBuilder.UseSqlite($"Filename={_dbPath}");
+            var serverVersion = ServerVersion.AutoDetect(_connectionString);
+            optionsBuilder.UseMySql(_connectionString, serverVersion);
         }
     }
 }

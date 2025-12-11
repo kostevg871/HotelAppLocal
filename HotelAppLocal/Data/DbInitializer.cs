@@ -1,29 +1,23 @@
 ﻿using HotelAppLocal.Data;
 using HotelAppLocal.Models;
 
-namespace HotelAppLocal.Data
+public static class DbInitializer
 {
-    public static class DbInitializer
+    public static void Initialize(AppDbContext context)
     {
-        public static void Initialize(AppDbContext context)
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+
+        var rooms = new[]
         {
-            // создаёт базу и таблицы, если их ещё нет
-            context.Database.EnsureCreated();
+            new Room { Number = "101", IsAvailable = true,  PricePerNight = 4500 },
+            new Room { Number = "102", IsAvailable = true,  PricePerNight = 4500 },
+            new Room { Number = "103", IsAvailable = false,  PricePerNight = 4500 },
+            new Room { Number = "104", IsAvailable = true,  PricePerNight = 4500 },
+            // ...
+        };
 
-            // если в базе уже есть комнаты – ничего не делаем
-            if (context.Rooms.Any())
-                return;
-
-            var rooms = new[]
-            {
-                new Room { Number = "101", IsAvailable = true },
-                new Room { Number = "102", IsAvailable = true },
-                new Room { Number = "201", IsAvailable = false }, // для примера одна недоступна
-                new Room { Number = "202", IsAvailable = true },
-            };
-
-            context.Rooms.AddRange(rooms);
-            context.SaveChanges();
-        }
+        context.Rooms.AddRange(rooms);
+        context.SaveChanges();
     }
 }

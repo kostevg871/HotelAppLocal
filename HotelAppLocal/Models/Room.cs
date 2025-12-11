@@ -11,5 +11,7 @@ namespace HotelAppLocal.Models
         public string Number { get; set; } = null!; // номер комнаты
 
         public bool IsAvailable { get; set; } = true; // доступна ли для бронирования
+
+        public float PricePerNight { get; set; } = 0;
     }
 }

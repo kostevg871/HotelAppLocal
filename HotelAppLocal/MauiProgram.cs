@@ -1,6 +1,4 @@
 ﻿using HotelAppLocal.Data;
-using HotelAppLocal.ViewModels;
-using HotelAppLocal.Views;
 
 namespace HotelAppLocal;
 
@@ -16,19 +14,26 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
 
-        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "rooms.db");
+        // Можно захардкодить под .env docker-compose:
+        var dbHost = "localhost";
+        var dbPort = "3306";          // то же, что MYSQL_PORT в .env
+        var dbName = "hotelapp";      // MYSQL_DATABASE
+        var dbUser = "hoteluser";     // MYSQL_USER
+        var dbPass = "student"; // MYSQL_PASSWORD
 
-        // DbContext
+        var connectionString =
+            $"server={dbHost};port={dbPort};database={dbName};user={dbUser};password={dbPass};TreatTinyAsBoolean=true;";
+
+        // Регистрация контекста с MySQL
         builder.Services.AddSingleton<AppDbContext>(_ =>
         {
-            var ctx = new AppDbContext(dbPath);
+            var ctx = new AppDbContext(connectionString);
             DbInitializer.Initialize(ctx);
             return ctx;
         });
 
-        // ViewModel + Page
-        builder.Services.AddTransient<RoomsViewModel>();
-        builder.Services.AddTransient<RoomsPage>();
+        builder.Services.AddTransient<ViewModels.RoomsViewModel>();
+        builder.Services.AddTransient<Views.RoomsPage>();
 
         return builder.Build();
     }
