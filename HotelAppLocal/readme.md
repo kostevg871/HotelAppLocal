@@ -380,36 +380,6 @@ dotnet maui run -t android
 
 ---
 
-## 5. Скриншоты
-
-Положите изображения в каталог `docs/screenshots/` и при необходимости обновите пути.
-
-- **StartupPage — стартовый экран**
-
-  ![StartupPage — стартовый экран](docs/screenshots/startup-page.png)
-
-- **LoginPage — экран входа**
-
-  ![LoginPage — вход](docs/screenshots/login-page.png)
-
-- **RoomsPage — список номеров**
-
-  ![RoomsPage — список номеров](docs/screenshots/rooms-page.png)
-
-- **BookingPage — бронирование**
-
-  ![BookingPage — бронирование](docs/screenshots/booking-page.png)
-
-- **MyBookingsPage — мои бронирования**
-
-  ![MyBookingsPage — мои брони](docs/screenshots/my-bookings-page.png)
-
-- **BookingsManagementPage — управление бронированиями**
-
-  ![BookingsManagementPage — управление бронированиями](docs/screenshots/bookings-management-page.png)
-
----
-
 ## 6. Известные ограничения
 
 Это учебный проект, поэтому у него есть набор упрощений:
