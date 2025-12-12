@@ -16,12 +16,34 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
 
+
+        string dbHost;
+
+        if (DeviceInfo.Platform == DevicePlatform.Android)
+        {
+            if (DeviceInfo.DeviceType == DeviceType.Virtual)
+            {
+                // ANDROID ЭМУЛЯТОР
+                dbHost = "10.0.2.2";
+            }
+            else
+            {
+                // ФИЗИЧЕСКОЕ УСТРОЙСТВО ПО USB + adb reverse
+                // adb reverse tcp:3306 tcp:3306
+                dbHost = "127.0.0.1";
+            }
+        }
+        else
+        {
+            // Windows / iOS / т.д. – просто localhost
+            dbHost = "localhost";
+        }
+
         // Можно захардкодить под .env docker-compose:
-        var dbHost = "localhost";
         var dbPort = "3306";          // то же, что MYSQL_PORT в .env
         var dbName = "hotelapp";      // MYSQL_DATABASE
         var dbUser = "hoteluser";     // MYSQL_USER
-        var dbPass = "student"; // MYSQL_PASSWORD
+        var dbPass = "student";         // MYSQL_PASSWORD
 
         var connectionString =
             $"server={dbHost};port={dbPort};database={dbName};user={dbUser};password={dbPass};TreatTinyAsBoolean=true;";
