@@ -6,6 +6,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Брони" Clicked="OnBookingsClicked" />
+        <ToolbarItem Text="Добавить" Clicked="OnAddRoomClicked" />
         <ToolbarItem Text="Выход" Clicked="OnLogoutClicked" />
     </ContentPage.ToolbarItems>
 
@@ -13,7 +14,7 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <!-- Верхняя панель с заголовком и кнопкой обновления -->
+        <!-- Верхняя панель -->
         <Grid Grid.Row="0"
               Padding="16,20"
               BackgroundColor="#1D4ED8">

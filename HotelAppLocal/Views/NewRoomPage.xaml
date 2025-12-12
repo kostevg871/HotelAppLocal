@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HotelAppLocal.Views.NewRoomPage"
+             Title="Новый номер">
+
+    <ContentPage.BackgroundColor>#EFF6FF</ContentPage.BackgroundColor>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label Text="Создание нового номера"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#1D4ED8" />
+
+            <Frame Padding="16"
+                   CornerRadius="12"
+                   BackgroundColor="White"
+                   HasShadow="True"
+                   BorderColor="#E5E7EB">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- Номер комнаты -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Номер комнаты"
+                               FontSize="14"
+                               TextColor="#111827" />
+                        <Entry x:Name="RoomNumberEntry"
+                               Placeholder="Например, 101"
+                               Keyboard="Text"
+                               TextColor="#111827"
+                               PlaceholderColor="#9CA3AF" />
+                    </VerticalStackLayout>
+
+                    <!-- Цена за ночь (int) -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Цена за ночь (₽, целое число)"
+                               FontSize="14"
+                               TextColor="#111827" />
+                        <Entry x:Name="PriceEntry"
+                               Placeholder="Например, 3500"
+                               Keyboard="Numeric"
+                               TextColor="#111827"
+                               PlaceholderColor="#9CA3AF" />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Кнопки -->
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Сохранить"
+                        BackgroundColor="#16A34A"
+                        TextColor="White"
+                        CornerRadius="8"
+                        Padding="14,6"
+                        FontAttributes="Bold"
+                        Clicked="OnSaveClicked" />
+
+                <Button Text="Отмена"
+                        BackgroundColor="#6B7280"
+                        TextColor="White"
+                        CornerRadius="8"
+                        Padding="14,6"
+                        Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+
+            <Label x:Name="ErrorLabel"
+                   FontSize="13"
+                   TextColor="#DC2626" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
