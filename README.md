@@ -19,11 +19,11 @@
 - создание новых номеров администратором.
 
 <p align="center">
-  <img src="docs/startup.jpg" alt="Стартовая страница" width="150" />
-  <img src="docs/login.jpg" alt="Страница логина" width="150" />
-  <img src="docs/main_page.jpg" alt="Страница с комнатами" width="150" />
-  <img src="docs/booking.jpg" alt="Бронирование" width="150" />
-  <img src="docs/new_room.jpg" alt="Создание комнаты" width="150" />
+  <img src="HotelAppLocal/docs/startup.jpg" alt="Стартовая страница" width="150" />
+  <img src="HotelAppLocal/docs/login.jpg" alt="Страница логина" width="150" />
+  <img src="HotelAppLocal/docs/main_page.jpg" alt="Страница с комнатами" width="150" />
+  <img src="HotelAppLocal/docs/booking.jpg" alt="Бронирование" width="150" />
+  <img src="HotelAppLocal/docs/new_room.jpg" alt="Создание комнаты" width="150" />
 </p>
 
 
