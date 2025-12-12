@@ -3,14 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HotelAppLocal.Data;
 using HotelAppLocal.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelAppLocal.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
         private readonly AuthService _auth;
-        private readonly RoomsPage _roomsPage;
-        private readonly RegistrationPage _registrationPage;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -40,14 +39,12 @@ namespace HotelAppLocal.ViewModels
         public ICommand LoginCommand { get; }
         public ICommand GoToRegisterCommand { get; }
 
-        public LoginViewModel(AuthService auth, RoomsPage roomsPage, RegistrationPage registrationPage)
+        public LoginViewModel(AuthService auth)
         {
             _auth = auth;
-            _roomsPage = roomsPage;
-            _registrationPage = registrationPage;
 
             LoginCommand = new Command(async () => await LoginAsync());
-            GoToRegisterCommand = new Command(async () => await Navigation.PushAsync(_registrationPage));
+            GoToRegisterCommand = new Command(async () => await GoToRegisterAsync());
         }
 
         private async Task LoginAsync()
@@ -61,8 +58,29 @@ namespace HotelAppLocal.ViewModels
                 return;
             }
 
-            // заменяем навигационный стек
-            Application.Current.MainPage = new NavigationPage(_roomsPage);
+            // Берём RoomsPage через DI только сейчас
+            var services = App.Current?.Handler?.MauiContext?.Services;
+            if (services is null)
+            {
+                Error = "Внутренняя ошибка: сервисы не доступны.";
+                return;
+            }
+
+            var roomsPage = services.GetRequiredService<RoomsPage>();
+            Application.Current.MainPage = new NavigationPage(roomsPage);
+        }
+
+        private async Task GoToRegisterAsync()
+        {
+            var services = App.Current?.Handler?.MauiContext?.Services;
+            if (services is null)
+            {
+                Error = "Внутренняя ошибка: сервисы не доступны.";
+                return;
+            }
+
+            var registrationPage = services.GetRequiredService<RegistrationPage>();
+            await Navigation.PushAsync(registrationPage);
         }
 
         private void OnPropertyChanged([CallerMemberName] string? name = null)

@@ -6,6 +6,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Брони" Clicked="OnBookingsClicked" />
+        <ToolbarItem Text="Выход" Clicked="OnLogoutClicked" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.BackgroundColor>#EFF6FF</ContentPage.BackgroundColor>
@@ -44,7 +45,7 @@
                     Command="{Binding LoadCommand}" />
         </Grid>
 
-        <!-- Список номеров (скроллится) -->
+        <!-- Список номеров -->
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Rooms}"
                         ItemsLayout="VerticalList"
@@ -60,7 +61,6 @@
 
                         <VerticalStackLayout Spacing="8">
 
-                            <!-- Номер и цена -->
                             <VerticalStackLayout Spacing="2">
                                 <Label Text="{Binding Number, StringFormat='Номер {0}'}"
                                        FontSize="18"
@@ -71,7 +71,6 @@
                                        TextColor="#2563EB" />
                             </VerticalStackLayout>
 
-                            <!-- Статус -->
                             <HorizontalStackLayout Spacing="6"
                                                    VerticalOptions="Center">
                                 <BoxView WidthRequest="8"
@@ -83,7 +82,6 @@
                                        TextColor="#6B7280" />
                             </HorizontalStackLayout>
 
-                            <!-- Кнопка бронирования -->
                             <Button Text="Забронировать"
                                     BackgroundColor="#2563EB"
                                     TextColor="White"

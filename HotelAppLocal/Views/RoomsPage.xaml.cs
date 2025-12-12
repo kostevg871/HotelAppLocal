@@ -1,6 +1,7 @@
 using HotelAppLocal.Data;
 using HotelAppLocal.Models;
 using HotelAppLocal.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelAppLocal.Views;
 
@@ -11,7 +12,11 @@ public partial class RoomsPage : ContentPage
     private readonly BookingsManagementPage _bookingsPage;
     private readonly AuthService _auth;
 
-    public RoomsPage(RoomsViewModel vm, AppDbContext db, BookingsManagementPage bookingsPage, AuthService auth)
+    public RoomsPage(
+        RoomsViewModel vm,
+        AppDbContext db,
+        BookingsManagementPage bookingsPage,
+        AuthService auth)
     {
         InitializeComponent();
         _viewModel = vm;
@@ -28,13 +33,22 @@ public partial class RoomsPage : ContentPage
 
         if (_viewModel.LoadCommand.CanExecute(null))
             _viewModel.LoadCommand.Execute(null);
+
+        var item = this.ToolbarItems.FirstOrDefault(t => t.Text == "Брони");
+        if (item != null)
+        {
+            var isStaff = _auth.CurrentUser != null &&
+                          (_auth.CurrentUser.Role == UserRole.Admin ||
+                           _auth.CurrentUser.Role == UserRole.Registrar);
+            item.IsEnabled = isStaff;
+        }
     }
 
     private async void OnBookClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.CommandParameter is Room room)
         {
-            await Navigation.PushAsync(new BookingPage(room, _db)); // твой существующий BookingPage
+            await Navigation.PushAsync(new BookingPage(room, _db));
         }
     }
 
@@ -51,5 +65,17 @@ public partial class RoomsPage : ContentPage
         }
 
         await Navigation.PushAsync(_bookingsPage);
+    }
+
+    private void OnLogoutClicked(object sender, EventArgs e)
+    {
+        _auth.Logout();
+
+        var services = App.Current?.Handler?.MauiContext?.Services;
+        if (services is not null)
+        {
+            var loginPage = services.GetRequiredService<LoginPage>();
+            Application.Current.MainPage = new NavigationPage(loginPage);
+        }
     }
 }

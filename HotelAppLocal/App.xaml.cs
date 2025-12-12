@@ -4,10 +4,10 @@ namespace HotelAppLocal;
 
 public partial class App : Application
 {
-    public App(LoginPage loginPage)
+    public App(StartupPage startupPage)
     {
         InitializeComponent();
 
-        MainPage = new NavigationPage(loginPage);
+        MainPage = new NavigationPage(startupPage);
     }
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HotelAppLocal.Views.StartupPage"
+             Title="Проверка подключения">
+
+    <ContentPage.BackgroundColor>#EFF6FF</ContentPage.BackgroundColor>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16"
+                             VerticalOptions="Center">
+
+            <Label Text="Подготовка к работе"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#1D4ED8"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Это учебное приложение подключается к MySQL на компьютере через adb reverse."
+                   FontSize="14"
+                   TextColor="#111827" />
+
+            <Frame Padding="12"
+                   CornerRadius="12"
+                   BackgroundColor="#DBEAFE"
+                   BorderColor="#93C5FD">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Перед запуском убедитесь, что:"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           TextColor="#1D4ED8" />
+
+                    <Label Text="1) Запущен Docker-контейнер с MySQL (docker compose up -d)."
+                           FontSize="13"
+                           TextColor="#111827" />
+
+                    <Label Text="2) Телефон подключен по USB и включен отладочный режим."
+                           FontSize="13"
+                           TextColor="#111827" />
+
+                    <Label Text="3) Выполнена команда:"
+                           FontSize="13"
+                           TextColor="#111827" />
+
+                    <Label Text="adb reverse tcp:3306 tcp:3306"
+                           FontSize="13"
+                           TextColor="#111827"
+                           FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Проверка соединения (без изменений в БД) -->
+            <Button x:Name="CheckButton"
+                    Text="Проверить подключение к БД"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Padding="14,6"
+                    FontAttributes="Bold"
+                    Clicked="OnCheckClicked" />
+
+            <!-- Пересоздание тестовой БД -->
+            <Button x:Name="InitButton"
+                    Text="Создать тестовую БД (пересоздать)"
+                    BackgroundColor="#D97706"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Padding="14,6"
+                    FontAttributes="Bold"
+                    Clicked="OnInitClicked" />
+
+            <!-- Индикатор выполнения -->
+            <ActivityIndicator x:Name="BusyIndicator"
+                               IsRunning="False"
+                               IsVisible="False"
+                               Color="#2563EB"
+                               Margin="0,4,0,0" />
+
+            <Label x:Name="StatusLabel"
+                   Text="Сначала проверьте подключение или создайте тестовую базу."
+                   FontSize="13"
+                   TextColor="#6B7280" />
+
+            <!-- "Продолжить" только если база доступна -->
+            <Button x:Name="ContinueButton"
+                    Text="Продолжить"
+                    BackgroundColor="#16A34A"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Padding="14,6"
+                    FontAttributes="Bold"
+                    IsEnabled="False"
+                    Clicked="OnContinueClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

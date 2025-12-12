@@ -48,12 +48,15 @@ public static class MauiProgram
         var connectionString =
             $"server={dbHost};port={dbPort};database={dbName};user={dbUser};password={dbPass};TreatTinyAsBoolean=true;";
 
+        // Сам контекст БД — БЕЗ инициализации
         builder.Services.AddSingleton<AppDbContext>(_ =>
         {
             var ctx = new AppDbContext(connectionString);
-            DbInitializer.Initialize(ctx);
             return ctx;
         });
+
+        // Сервис проверки соединения и инициализации
+        builder.Services.AddSingleton<DbHealthService>();
 
         builder.Services.AddSingleton<AuthService>();
 
@@ -68,6 +71,7 @@ public static class MauiProgram
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegistrationPage>();
         builder.Services.AddTransient<BookingsManagementPage>();
+        builder.Services.AddTransient<StartupPage>();
 
         return builder.Build();
     }
