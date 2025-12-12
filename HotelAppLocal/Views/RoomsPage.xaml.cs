@@ -38,27 +38,23 @@ public partial class RoomsPage : ContentPage
         if (_viewModel.LoadCommand.CanExecute(null))
             _viewModel.LoadCommand.Execute(null);
 
-        // Текущий пользователь
         var user = _auth.CurrentUser;
 
-        // Кнопка "Брони" — только для админа и регистратора
+        // "Брони" — доступна всем залогиненным пользователям
         var bookingsItem = this.ToolbarItems.FirstOrDefault(t => t.Text == "Брони");
         if (bookingsItem != null)
         {
-            var isStaff = user != null &&
-                          (user.Role == UserRole.Admin || user.Role == UserRole.Registrar);
-            bookingsItem.IsEnabled = isStaff;
+            bookingsItem.IsEnabled = user != null;
         }
 
-        // Кнопка "Добавить" — только для админа
+        // "Добавить" — только для админа
         var addItem = this.ToolbarItems.FirstOrDefault(t => t.Text == "Добавить");
         if (addItem != null)
         {
-            var isAdmin = user?.Role == UserRole.Admin;
-            addItem.IsEnabled = isAdmin;
+            addItem.IsEnabled = user?.Role == UserRole.Admin;
         }
 
-        // "Выход" — всегда доступен, если кто-то залогинен
+        // "Выход" — если кто-то залогинен
         var logoutItem = this.ToolbarItems.FirstOrDefault(t => t.Text == "Выход");
         if (logoutItem != null)
         {
@@ -97,24 +93,34 @@ public partial class RoomsPage : ContentPage
         try
         {
             var user = _auth.CurrentUser;
-            if (user == null ||
-                !(user.Role == UserRole.Admin || user.Role == UserRole.Registrar))
+            if (user == null)
             {
-                await DisplayAlert("Доступ запрещён",
-                    "Только администратор или регистратор могут управлять бронированиями.",
+                await DisplayAlert("Авторизация",
+                    "Для просмотра бронирований нужно войти в систему.",
                     "OK");
                 return;
             }
 
-            await Navigation.PushAsync(_bookingsPage);
+            if (user.Role == UserRole.Admin || user.Role == UserRole.Registrar)
+            {
+                // Страница управления всеми брони
+                await Navigation.PushAsync(_bookingsPage);
+            }
+            else
+            {
+                // Обычный пользователь – "Мои бронирования"
+                var myBookingsPage = _services.GetRequiredService<MyBookingsPage>();
+                await Navigation.PushAsync(myBookingsPage);
+            }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Ошибка",
-                $"Не удалось открыть список бронирований:\n{ex.Message}",
+                $"Не удалось открыть бронирования:\n{ex.Message}",
                 "OK");
         }
     }
+
 
     private async void OnAddRoomClicked(object sender, EventArgs e)
     {

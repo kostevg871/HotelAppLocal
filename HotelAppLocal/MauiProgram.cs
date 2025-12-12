@@ -60,6 +60,9 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<AuthService>();
 
+
+        
+
         // ViewModels
         builder.Services.AddTransient<RoomsViewModel>();
         builder.Services.AddTransient<LoginViewModel>();
@@ -73,6 +76,7 @@ public static class MauiProgram
         builder.Services.AddTransient<BookingsManagementPage>();
         builder.Services.AddTransient<StartupPage>();
         builder.Services.AddTransient<NewRoomPage>();
+        builder.Services.AddTransient<MyBookingsPage>();
 
         return builder.Build();
     }
